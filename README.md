@@ -1,5 +1,5 @@
 # hibp_powershell
-Powershell functions for querying HaveIBeenPwned
+Powershell functions for querying the HaveIBeenPwned v3 API
 
 Follows the specification at https://haveibeenpwned.com/API/v3 but encapsulated in Powershell functions.
 
