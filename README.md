@@ -17,3 +17,12 @@ Just copy the file `hibpFunctions.psm1` to a convenient location either directly
 See examples in each function, but broadly:
 
 -   `name-of-function -hibp_api_key $yourKeyHere -user_agent "your_user_agent_name"` along with any other parameters specified by the function
+
+## Note on API Key storage
+
+Of course it's recommended not to store the API key in plaintext. You could do something like this:
+- `Get-Credential | Export-Clixml hibp.xml` with the user agent as the username and the API key as the password.
+- To retrieve it's
+  - `$credentials = Import-Clixml hibp.xml`
+  - `$userAgent = $credentials.username`
+  - `$apiKey = $credentials.GetNetworkCredential().password`
