@@ -22,6 +22,7 @@ See examples in each function, but broadly:
 
 The functions do nothing to validate the response or amend the response from HIBP. You can see the response codes here:
 
+
 | Code |	Description |
 | --- | ---- |
 | 200 |	Ok — everything worked and there's a string array of pwned sites for the account |
@@ -31,6 +32,7 @@ The functions do nothing to validate the response or amend the response from HIB
 | 404 |	Not found — the account could not be found and has therefore not been pwned |
 | 429 |	Too many requests — the rate limit has been exceeded |
 | 503 |	Service unavailable — usually returned by Cloudflare if the underlying service is not available  |
+
 
 ## Note on API Key storage
 
