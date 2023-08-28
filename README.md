@@ -36,6 +36,10 @@ The functions do nothing to validate the response or amend the response from HIB
 
 Full reference is at: https://haveibeenpwned.com/API/v3#ResponseCodes
 
+## Testing
+
+When testing, there are specific accounts and domains that you can use. These are listed at: https://haveibeenpwned.com/API/v3#TestAccounts
+
 
 ## Note on API Key storage
 
