@@ -36,6 +36,7 @@ The functions do nothing to validate the response or amend the response from HIB
 
 Full reference is at: https://haveibeenpwned.com/API/v3#ResponseCodes
 
+
 ## Note on API Key storage
 
 Of course it's recommended not to store the API key in plaintext. You could do something like this:
