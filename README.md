@@ -21,6 +21,7 @@ See examples in each function, but broadly:
 ## Response codes
 
 The functions do nothing to validate the response or amend the response from HIBP. You can see the response codes here:
+
 | Code |	Description |
 | 200 |	Ok — everything worked and there's a string array of pwned sites for the account |
 | 400 |	Bad request — the account does not comply with an acceptable format (i.e. it's an empty string) |
