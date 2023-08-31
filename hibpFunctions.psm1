@@ -42,7 +42,8 @@ function Generate-HIBPHeaders
     return $headers
     
 }
-function Get-HIBPAllBreachesForAnAccount {
+function Get-HIBPAllBreachesForAnAccount
+{
 
     <#
     .SYNOPSIS
@@ -82,16 +83,19 @@ function Get-HIBPAllBreachesForAnAccount {
     {
         $url += "?truncateResponse=false"
     }
-    $Params = @{
-        Method  = "Get"
-        Uri     = $url
-        Headers = $Headers
 
+    $result = Invoke-WebRequest -Uri $url -Headers $headers
+
+    if ($result.StatusCode -eq 200)
+    {
+        $result = $result.content | ConvertFrom-Json
+        return $result
     }
-
-    $result = Invoke-restmethod @Params
-
-    return $result
+    else
+    {
+        ("Error getting subscribed domains: {0}" -f $result.StatusCode) | Write-Error 
+        return $result.StatusCode
+    }
     
 }
 
@@ -131,19 +135,24 @@ function Get-HIBPAllBreachesForADomain
     $headers = Generate-HIBPHeaders -hibp_api_key $hibp_api_key -user_agent $user_agent
 
     $url = $hibpBaseURL + "breacheddomain/" + $domain
-    $Params = @{
-        Method  = "Get"
-        Uri     = $url
-        Headers = $headers
+    
+    $result = Invoke-WebRequest -Uri $url -Headers $headers
 
+    if ($result.StatusCode -eq 200)
+    {
+        $result = $result.content | ConvertFrom-Json
+        return $result
+    }
+    else
+    {
+        ("Error getting all breaches for the domains: {0}" -f $result.StatusCode) | Write-Error
+        return $result.StatusCode
     }
 
-    $result = Invoke-restmethod @Params
-
-    return $result
 }
 
-function Get-HIBPSubscribedDomains {
+function Get-HIBPSubscribedDomains
+{
 
     <#
     .SYNOPSIS
@@ -170,14 +179,19 @@ function Get-HIBPSubscribedDomains {
     $headers = Generate-HIBPHeaders -hibp_api_key $hibp_api_key -user_agent $user_agent
 
     $url = $hibpBaseURL + "subscribeddomains"
-    $Params = @{
-        Method  = "Get"
-        Uri     = $url
-        Headers = $headers
+
+    $result = Invoke-WebRequest -Uri $url -Headers $headers
+
+    if ($result.StatusCode -eq 200)
+    {
+        $result = $result.content | ConvertFrom-Json
+        return $result
     }
-
-    $result = Invoke-restmethod @Params
-
+    else
+    {
+        ("Error getting subscribed domains: {0}" -f $result.StatusCode) | Write-Error
+        return $result.StatusCode
+    }
     # not doing any error checking here. Can be done in other code
     return $result
 }
@@ -209,16 +223,19 @@ function Get-HIBPBreachedSites
     $headers = Generate-HIBPHeaders -hibp_api_key $hibp_api_key -user_agent $user_agent
 
     $url = $hibpBaseURL + "breaches"
-    $Params = @{
-        Method  = "Get"
-        Uri     = $url
-        Headers = $Headers
 
+    $result = Invoke-WebRequest -Uri $url -Headers $headers
+
+    if ($result.StatusCode -eq 200)
+    {
+        $result = $result.content | ConvertFrom-Json
+        return $result
     }
-
-    $result = Invoke-restmethod @Params
-
-    return $result
+    else
+    {
+        ("Error getting subscribed domains: {0}" -f $result.StatusCode) | Write-Error
+        return $result.StatusCode
+    }
 }
 
 function Get-HIBPBreachedSite
@@ -254,16 +271,19 @@ function Get-HIBPBreachedSite
     $headers = Generate-HIBPHeaders -hibp_api_key $hibp_api_key -user_agent $user_agent
 
     $url = $hibpBaseURL + "breach/" + $breach
-    $Params = @{
-        Method  = "Get"
-        Uri     = $url
-        Headers = $Headers
+    
+    $result = Invoke-WebRequest -Uri $url -Headers $headers
 
+    if ($result.StatusCode -eq 200)
+    {
+        $result = $result.content | ConvertFrom-Json
+        return $result
     }
-
-    $result = Invoke-restmethod @Params
-
-    return $result
+    else
+    {
+        ("Error getting subscribed domains: {0}" -f $result.StatusCode) | Write-Error
+        return $result.StatusCode
+    }
 }
 
 function Get-HIBPLatestBreach
@@ -294,16 +314,19 @@ function Get-HIBPLatestBreach
     $headers = Generate-HIBPHeaders -hibp_api_key $hibp_api_key -user_agent $user_agent
 
     $url = $hibpBaseURL + "latestbreach"
-    $Params = @{
-        Method  = "Get"
-        Uri     = $url
-        Headers = $Headers
+    
+    $result = Invoke-WebRequest -Uri $url -Headers $headers
 
+    if ($result.StatusCode -eq 200)
+    {
+        $result = $result.content | ConvertFrom-Json
+        return $result
     }
-
-    $result = Invoke-restmethod @Params
-
-    return $result
+    else
+    {
+        ("Error getting subscribed domains: {0}" -f $result.StatusCode) | Write-Error
+        return $result.StatusCode
+    }
 }
 
 function Get-HIBPDataClasses
@@ -334,16 +357,19 @@ function Get-HIBPDataClasses
     $headers = Generate-HIBPHeaders -hibp_api_key $hibp_api_key -user_agent $user_agent
 
     $url = $hibpBaseURL + "dataclasses"
-    $Params = @{
-        Method  = "Get"
-        Uri     = $url
-        Headers = $Headers
+    
+    $result = Invoke-WebRequest -Uri $url -Headers $headers
 
+    if ($result.StatusCode -eq 200)
+    {
+        $result = $result.content | ConvertFrom-Json
+        return $result
     }
-
-    $result = Invoke-restmethod @Params
-
-    return $result
+    else
+    {
+        ("Error getting subscribed domains: {0}" -f $result.StatusCode) | Write-Error
+        return $result.StatusCode
+    }
 }
 
 function Get-HIBPAllPastesForAnAccount
@@ -378,15 +404,19 @@ function Get-HIBPAllPastesForAnAccount
     $headers = Generate-HIBPHeaders -hibp_api_key $hibp_api_key -user_agent $user_agent
 
     $url = $hibpBaseURL + "pasteaccount/" + [System.Web.HttpUtility]::UrlEncode($account)
-    $Params = @{
-        Method  = "Get"
-        Uri     = $url
-        Headers = $headers
+    
+    $result = Invoke-WebRequest -Uri $url -Headers $headers
+
+    if ($result.StatusCode -eq 200)
+    {
+        $result = $result.content | ConvertFrom-Json
+        return $result
     }
-
-    $result = Invoke-restmethod @Params
-
-    return $result
+    else
+    {
+        ("Error getting subscribed domains: {0}" -f $result.StatusCode) | Write-Error
+        return [int]$result.StatusCode
+    }
     
 }
 
@@ -417,16 +447,19 @@ function Get-HIBPSubscriptionStatus
     $headers = Generate-HIBPHeaders -hibp_api_key $hibp_api_key -user_agent $user_agent
 
     $url = $hibpBaseURL + "subscription/status"
-    $Params = @{
-        Method  = "Get"
-        Uri     = $url
-        Headers = $Headers
+    
+    $result = Invoke-WebRequest -Uri $url -Headers $headers
 
+    if ($result.StatusCode -eq 200)
+    {
+        $result = $result.content | ConvertFrom-Json
+        return $result
     }
-
-    $result = Invoke-restmethod @Params
-
-    return $result
+    else
+    {
+        ("Error getting subscribed domains: {0}" -f $result.StatusCode) | Write-Error
+        return $result.StatusCode
+    }
 }
 
 function Get-PwnedPassowrdsRange
@@ -436,12 +469,6 @@ function Get-PwnedPassowrdsRange
     .SYNOPSIS
     Searches for password hashes that match the prefix you've specified
 
-    .PARAMETER hibp_api_key
-    The API key for your account
-
-    .PARAMETER user_agent
-    The user-agent string that you want to send to HIBP
-
     .PARAMETER prefix
     The 5 character hex string that you want to use as the search prefix
 
@@ -449,7 +476,10 @@ function Get-PwnedPassowrdsRange
     Searches for NTLM hashes rather than SHA-1 hashes
 
     .EXAMPLE
-    Get-PwnedPassowrdsRange -hibp_api_key "putYourKeyHere" -user_agent "yourUserAgentString" -prefix "abc12"
+    Get-PwnedPassowrdsRange -prefix "abc12"
+
+    .NOTES
+    This function does not output JSON or objects, it is a string of breaches. See https://haveibeenpwned.com/API/v3#PwnedPasswords for information.
     #>
 
     param (
@@ -462,8 +492,8 @@ function Get-PwnedPassowrdsRange
     if ($prefix -notmatch '^[a-fA-F0-9]{5}$') # five hex characters
     {
         # prefix doesn't match what we're expecting. Print error
-        Write-host ("Prefix doesn't match pattern expected")
-        exit
+        ("Prefix doesn't match pattern expected") | Write-Error
+        return -1
     }
 
     $url = $pwnedPasswordBaseURL + "range/" + $prefix
@@ -476,15 +506,17 @@ function Get-PwnedPassowrdsRange
     $headers = @{
         'Add-Padding' = $true
     }
+    
+    $result = Invoke-WebRequest -Uri $url -Headers $headers
 
-    $Params = @{
-        Method  = "Get"
-        Uri     = $url
-        Headers = $Headers
-
+    if ($result.StatusCode -eq 200)
+    {
+        $result = $result.content
+        return $result
     }
-
-    $result = Invoke-restmethod @Params
-
-    return $result
+    else
+    {
+        ("Error getting pwnd password range: {0}" -f $result.StatusCode) | Write-Error
+        return [int]$result.StatusCode
+    }
 }
